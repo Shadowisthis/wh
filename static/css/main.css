@@ -1,0 +1,52 @@
+:root {
+    --primary-blue: #2196F3;
+    --secondary-blue: #E3F2FD;
+    --accent-white: #FFFFFF;
+}
+
+body {
+    background-color: var(--secondary-blue);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: var(--primary-blue) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-box {
+    border: 2px dashed var(--primary-blue);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-box:hover {
+    background-color: var(--accent-white);
+}
+
+.result-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.history-item {
+    background-color: var(--accent-white);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}

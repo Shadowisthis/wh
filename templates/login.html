@@ -1,0 +1,35 @@
+{% extends "welcome.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">用户登录</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('login') }}">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            <label class="form-label">用户名</label>
+                            {{ form.username(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密码</label>
+                            {{ form.password(class="form-control") }}
+                        </div>
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-primary") }}
+                            <div class="mt-3">
+                                <a href="{{ url_for('register') }}" class="text-decoration-none">注册新账号</a>
+                                <span class="mx-2">|</span>
+                                <a href="{{ url_for('reset_password') }}" class="text-decoration-none">忘记密码？</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

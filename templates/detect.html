@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>肺炎检测</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">肺炎智慧识别系统</a>
+            <div class="d-flex">
+                <a href="{{ url_for('history') }}" class="btn btn-outline-light me-2">检测历史</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light">退出登录</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">影像上传检测</h4>
+            </div>
+            <div class="card-body p-5">
+                <form id="upload-form" method="POST" enctype="multipart/form-data">
+                    <div class="upload-box mb-4">
+                        <input type="file" id="file-input" name="image" accept="image/*" hidden>
+                        <div class="text-muted">
+                            <i class="bi bi-cloud-upload fs-1"></i>
+                            <p class="mb-0">点击上传CT影像（支持JPG/PNG格式）</p>
+                        </div>
+                    </div>
+                </form>
+
+                {% if result %}
+                <div class="result-card mt-4 p-4 bg-white rounded">
+                    <h5 class="text-primary mb-3">诊断报告</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="{{ image }}" class="result-image w-100">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-{{ 'danger' if result.诊断结果 == '肺炎阳性' else 'success' }}">
+                                <h5>诊断结论：{{ result.诊断结果 }}</h5>
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    病灶数量
+                                    <span class="badge bg-primary rounded-pill">{{ result.病灶数量 }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    最大置信度
+                                    <span class="text-primary">{{ result.最大置信度 }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    平均置信度
+                                    <span class="text-primary">{{ result.平均置信度 }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+    // 添加文件上传交互逻辑
+    document.querySelector('.upload-box').addEventListener('click', () => {
+        document.getElementById('file-input').click()
+    })
+
+    document.getElementById('file-input').addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            document.getElementById('upload-form').submit()
+        }
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>检测历史</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">肺炎智慧识别系统</a>
+            <div class="d-flex">
+                <a href="{{ url_for('detect') }}" class="btn btn-outline-light me-2">返回检测</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light">退出登录</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">检测历史记录</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="container mt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>检测历史</h3>
+                        <a href="{{ url_for('export_history') }}" class="btn btn-success">
+                            <i class="bi bi-download"></i> 导出CSV
+                        </a>
+                    </div>
+                    
+                    {% if records %}
+                    <div class="list-group">
+                        {% for record in records %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename=record.image_path) }}" 
+                                     class="history-thumbnail me-3">
+                                <div>
+                                    <div class="fw-bold">{{ record.detection_time.strftime('%Y-%m-%d %H:%M') }}</div>
+                                    <div class="text-muted">{{ record.result.诊断结果 }}</div>
+                                </div>
+                            </div>
+                            <div>
+                                <form action="{{ url_for('delete_record', record_id=record.id) }}" method="post" 
+                                      class="d-inline" onsubmit="return confirm('确定删除该记录？')">
+                                    <button type="submit" class="btn btn-danger btn-sm">删除</button>
+                                </form>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">暂无历史检测记录</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+    // 删除确认和结果提示
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+            if (!confirm('确定要永久删除此检测记录吗？')) {
+                e.preventDefault();
+            }
+        });
+    });
+    </script>
+</body>
+</html>

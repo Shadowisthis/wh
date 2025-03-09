@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>肺炎智慧识别系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body class="d-flex flex-column">
+    {% block content %}
+    <main class="container my-auto">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body text-center p-5">
+                <h1 class="card-title mb-4 text-primary">欢迎使用肺炎智慧识别系统</h1>
+                <p class="card-text mb-4">本系统基于YOLOv8深度学习算法开发，提供专业级的肺炎医学影像分析服务。</p>
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">开始使用</a>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+</body>
+</html>
